@@ -4,137 +4,145 @@ import { Router } from '@angular/router';
 import { LoginService } from '../services/login-service.service';
 import { setUserOnMenu } from '../services/set-username-on-menu.service';
 import * as CryptoJS from 'crypto-js';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ILogs } from '../models/logs';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
-  private login: object = {};
-  username: string;
-  password: string;
-  usernameCheck: string;
-  petCheckInput: string;
-  mealCheckInput: string;
-  newPassword: string;
-  newPasswordRepeat: string;
-  private usernameSecQuestion = [];
+  private login: ILogs;
+  private usernameSecQuestion: ILogs;
+  resetFormShow: boolean = false;
+  loginFormShow: boolean = true;
+  reset: boolean = true;
+  loginTab: boolean = true;
+  loginForm: FormGroup;
+  resetForm: FormGroup;
+  newPassForm: FormGroup;
+  key: string = '8b2b7d7dc4063bc0bf30986536f8816c71405c16fb0cc4677db1e349af157baa';
   constructor(private router: Router, private loginService: LoginService, private setUsernameAndRoleService: setUserOnMenu) { }
 
   ngOnInit() {
     $(document).ready(function () {
       $('.tabs').tabs();
     });
+    this.loginForm = new FormGroup({
+      'username': new FormControl(null, Validators.required),
+      'password': new FormControl(null, Validators.required)
+    });
+    this.resetForm = new FormGroup({
+      'resetUsername': new FormControl(null, Validators.required),
+      'resetPet': new FormControl(null, Validators.required),
+      'resetMeal': new FormControl(null, Validators.required),
+    });
+    this.newPassForm = new FormGroup({
+      'newPass': new FormControl(null, Validators.required),
+      'newPassRepeated': new FormControl(null, Validators.required)
+    });
   }
-  checkProperties(obj) {
-    for (let key in obj) {
-      if (obj[key] !== null && obj[key] != "")
-        return false;
-    }
-    return true;
+  resetFormFields(): void {
+    this.resetForm.setValue({
+      'resetUsername': null,
+      'resetPet': null,
+      'resetMeal': null,
+    });
+  }
+  resetNewPassFormFields(): void {
+    this.newPassForm.setValue({
+      'newPass': null,
+      'newPassRepeated': null
+    });
+  }
+  switchTabsHide() {
+    this.resetFormShow = true;
+    this.loginFormShow = false;
+    this.reset = false;
+    this.loginTab = false;
+  }
+  switchTabsShow() {
+    this.resetFormShow = false;
+    this.loginFormShow = true;
+    this.reset = true;
+    this.loginTab = true;
   }
   loginUser() {
-    if ((this.username === undefined || this.username.trim() === "") || (this.password === undefined || this.password.trim() === "")) {
+    const username = this.loginForm.value.username;
+    const password = this.loginForm.value.password;
+    const regexWhitespace = /\s/;
+    if (!this.loginForm.valid || (username.match(regexWhitespace) || password.match(regexWhitespace))) {
       toast("Unesite korisničko ime/lozinku!", 3000);
     } else {
-      // let key = '8b2b7d7dc4063bc0bf30986536f8816c71405c16fb0cc4677db1e349af157baa';
-      // const ciphertextPassword = CryptoJS.HmacMD5(this.password.trim(), key);
-      this.loginService.setValueForUsername(this.username.trim());
-      this.loginService.setValueForPassword(this.password.trim());
+      const ciphertextPassword = CryptoJS.HmacMD5(password, this.key);
+      this.loginService.setValueForUsername(username);
+      this.loginService.setValueForPassword(ciphertextPassword.toString());
       this.loginService.getFilterLogins()
-        .subscribe(data => {
+        .subscribe((data: any) => {
           this.login = data;
-          if (this.checkProperties(this.login)) {
+          if (!this.login['Username']) {
             toast("Neispravno korisničko ime ili lozinka!", 3000);
-            this.username = "";
-            this.password = "";
+            this.loginForm.setValue({
+              'username': null,
+              'password': null
+            });
           } else {
             this.setUsernameAndRoleService.setValueForRole(this.login['Role']);
             this.setUsernameAndRoleService.setValueForUsername(this.login['OwnerNameSurname']);
             this.loginService.setUserLoggedIn();
-            localStorage.setItem('session', this.loginService.getUserLoggedIn());
-            localStorage.setItem('username', this.setUsernameAndRoleService.getValueForUsername());
-            localStorage.setItem('role', this.setUsernameAndRoleService.getValueForRole());
             this.router.navigateByUrl('/logsdetail');
           }
         });
     }
   }
   checkResetPassword() {
-    if ((this.usernameCheck === undefined || this.usernameCheck.trim() === "") || (this.petCheckInput === undefined || this.petCheckInput.trim() === "") || (this.mealCheckInput === undefined || this.mealCheckInput.trim() === "")) {
+    const username = this.resetForm.value.resetUsername;
+    const pet = this.resetForm.value.resetPet;
+    const meal = this.resetForm.value.resetMeal;
+    const regexWhitespace = /\s/;
+    if (!this.resetForm.valid || (username.match(regexWhitespace) || pet.match(regexWhitespace) || meal.match(regexWhitespace))) {
       toast("Unesite tražena polja!", 3000);
     } else {
-      let key = '8b2b7d7dc4063bc0bf30986536f8816c71405c16fb0cc4677db1e349af157baa';
-      const ciphertextSecQuest1 = CryptoJS.HmacMD5(this.petCheckInput.trim(), key);
-      const ciphertextSecQuest2 = CryptoJS.HmacMD5(this.mealCheckInput.trim(), key);
-      this.loginService.setValueForUsername(this.usernameCheck);
+      const ciphertextSecQuest1 = CryptoJS.HmacMD5(pet, this.key);
+      const ciphertextSecQuest2 = CryptoJS.HmacMD5(meal, this.key);
+      this.loginService.setValueForUsername(username);
       this.loginService.setValueForPetCheck(ciphertextSecQuest1.toString());
       this.loginService.setValueForMealCheck(ciphertextSecQuest2.toString());
-      this.loginService.getCheckUsernameBySecQuestion().subscribe(data => {
+      this.loginService.getCheckUsernameBySecQuestion().subscribe((data: any) => {
         this.usernameSecQuestion = data;
-        if (this.usernameSecQuestion === null) {
+        if (data === null || this.usernameSecQuestion['Username']) {
           toast("Uneti korisnik, ili sigurnosna pitanja nisu odgovarajuća!", 3000);
-          this.usernameCheck = "";
-          this.petCheckInput = "";
-          this.mealCheckInput = "";
+          this.resetFormFields();
         } else {
           this.switchTabsHide();
-          this.usernameCheck = "";
-          this.petCheckInput = "";
-          this.mealCheckInput = "";
+          this.resetFormFields();
         }
       });
     }
   }
   resetPassword() {
-    if ((this.newPassword === undefined || this.newPassword.trim() === "") || (this.newPasswordRepeat === undefined || this.newPasswordRepeat.trim() === "")) {
+    const newPass = this.newPassForm.value.newPass;
+    const newPassRepeated = this.newPassForm.value.newPassRepeated;
+    const regexWhitespace = /\s/;
+    if (!this.newPassForm.valid || (newPass.match(regexWhitespace) || newPassRepeated.match(regexWhitespace))) {
       toast("Molimo vas unesite odgovarajuća polja!", 3000);
     } else {
-      if (this.newPassword.trim().length <= 5) {
+      if (newPass.length <= 5) {
         toast("Dužina lozinke mora biti veća od 5 karaktera!", 3000);
-          this.newPassword = "";
-          this.newPasswordRepeat = "";
+        this.resetNewPassFormFields();
       } else {
-        if (this.newPassword !== this.newPasswordRepeat) {
+        if (newPass !== newPassRepeated) {
           toast("Unete lozinke moraju biti iste!", 3000);
-          this.newPassword = "";
-          this.newPasswordRepeat = "";
+          this.resetNewPassFormFields();
         } else {
-          let key = '8b2b7d7dc4063bc0bf30986536f8816c71405c16fb0cc4677db1e349af157baa';
-          const newPassword = CryptoJS.HmacMD5(this.newPassword.trim(), key);
+          const newPassword = CryptoJS.HmacMD5(newPass, this.key);
           this.loginService.setValueForNewPassword(newPassword.toString());
           this.loginService.updatePassword().subscribe(data => {
             toast("Lozinka je uspešno promenjena!", 3000);
-            this.switchTabsShow();
-            this.newPassword = "";
-            this.newPasswordRepeat = "";
+            window.location.reload();
           });
         }
       }
     }
-  }
-  switchTabsHide() {
-    let checkUsernameTab = document.getElementById('checkUsernameLink');
-    let login = document.getElementById('login');
-    let password = document.getElementById('resetpassword');
-    let hiddenDiv = document.getElementById('test2');
-    let showDiv = document.getElementById('test3');
-    checkUsernameTab.style.display = "none";
-    login.style.display = "none";
-    password.style.display = "block";
-    hiddenDiv.style.display = "none";
-    showDiv.style.display = "block";
-    $('#resetpassword a').click();
-  }
-  switchTabsShow() {
-    let checkUsernameTab = document.getElementById('checkUsernameLink');
-    let login = document.getElementById('login');
-    let password = document.getElementById('resetpassword');
-    let showDiv = document.getElementById('test3');
-    checkUsernameTab.style.display = "block";
-    login.style.display = "block";
-    password.style.display = "none";
-    showDiv.style.display = "none";
-    $('#login a').click();
   }
 }

@@ -11,7 +11,7 @@ import { MzModalService } from 'ng2-materialize';
   templateUrl: './logs-detail-list.component.html',
   styleUrls: ['./logs-detail-list.component.scss'],
   providers: [DatePipe, FilterServiceService]
-})
+}) 
 export class LogsDetailListComponent implements OnInit {
   public logs = [];
   public logsFilterAll = [];

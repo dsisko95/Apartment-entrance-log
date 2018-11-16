@@ -21,11 +21,11 @@ const routes: Routes = [
       path: 'logsdetail',
       canActivate: [AuthGuard],
       component: LogsDetailListComponent,
-    },
-    {
-      path: 'logsdetail/insertdata',
-      canActivate: [AuthAdminGuard],
-      component: AdministrationComponent,
+      children: [{
+        path: 'insertdata',
+        canActivate: [AuthAdminGuard],
+        component: AdministrationComponent,
+      }]
     },
     { path: '**', redirectTo: '/login' }
   ];

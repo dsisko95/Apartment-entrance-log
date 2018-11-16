@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './services/login-service.service';
 import { AuthGuard } from './auth.guard';
-import { AuthAdminGuard  } from './auth-admin.guard';
+import { AuthAdminGuard } from './auth-admin.guard';
 import { setUserOnMenu } from './services/set-username-on-menu.service';
 import { AppComponent } from './app.component';
 import { LogsDetailListComponent } from './logs-detail-list/logs-detail-list.component';
@@ -18,7 +18,7 @@ import { AdministrationComponent } from './administration-comp/administration-co
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from './feature-modules/materialize.module';
 import { ProgressBarModule } from './feature-modules/progressbar.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { ProgressBarModule } from './feature-modules/progressbar.module';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterializeModule,
