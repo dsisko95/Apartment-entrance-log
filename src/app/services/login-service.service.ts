@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ILogs } from './logs';
+import { ILogs } from '../models/logs';
 
 @Injectable()
-export class LoginServiceService {
+export class LoginService {
   private username: string;
   private password: string;
   private isUserLoggedIn;

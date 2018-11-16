@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FilterServiceService } from '../filter-service.service';
+import { FilterServiceService } from '../services/filter-service.service';
 import { toast } from 'angular2-materialize';
-import { LoginServiceService } from '../login-service.service';
-import { setUsernameAndRoleOnMenuService } from '../set-username-and-role-on-menu.service';
+import { LoginService } from '../services/login-service.service';
+import { setUserOnMenu } from '../services/set-username-on-menu.service';
 import { Location } from '@angular/common';
 import { MzModalService } from 'ng2-materialize';
 @Component({
@@ -35,7 +34,7 @@ export class LogsDetailListComponent implements OnInit {
   nameType: string;
   logintext: string;
   logModal: object = {};
-  constructor(private filtersService: FilterServiceService, private loginService: LoginServiceService, private setUsernameAndRoleService: setUsernameAndRoleOnMenuService, private location: Location, private modalService: MzModalService) {
+  constructor(private filtersService: FilterServiceService, private loginService: LoginService, private setUsernameAndRoleService: setUserOnMenu, private location: Location, private modalService: MzModalService) {
     this.city = 'Svi';
     this.owner = 'Svi';
     this.client = 'Svi';

@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { toast } from 'angular2-materialize';
-import { AdministrationService } from '../administration.service';
+import { AdministrationService } from '../services/administration.service';
 import { Location } from '@angular/common';
-import { setUsernameAndRoleOnMenuService } from '../set-username-and-role-on-menu.service';
+import { setUserOnMenu } from '../services/set-username-on-menu.service';
 import { Router } from '@angular/router';
-import { FilterServiceService } from '../filter-service.service';
 import * as CryptoJS from 'crypto-js';
 
 @Component({
@@ -13,7 +12,7 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./administration-comp.component.scss'],
   providers: [AdministrationService]
 })
-export class AdministrationCompComponent implements OnInit {
+export class AdministrationComponent implements OnInit {
   cityName: string;
   countryName: string;
   editRowID: number;
@@ -54,7 +53,7 @@ export class AdministrationCompComponent implements OnInit {
   private clientjmbg = [];
   key: string;
   reverse: boolean = false;
-  constructor(private administrationService: AdministrationService, private _location: Location, private loginUser: setUsernameAndRoleOnMenuService, private router: Router) {
+  constructor(private administrationService: AdministrationService, private _location: Location, private loginUser: setUserOnMenu, private router: Router) {
   }
   ngOnInit() {
     this.populateCountriesArray();

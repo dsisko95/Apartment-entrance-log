@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LogsServiceService } from '../logs-service.service';
-import { DataShareService } from '../data-share.service';
+import { Component, OnInit } from '@angular/core';
+import { LogsServiceService } from '../services/logs-service.service';
+import { DataShareService } from '../services/data-share.service';
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ILogs } from './logs';
+import { ILogs } from '../models/logs';
 import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class LogsServiceService {

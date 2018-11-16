@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { LoginServiceService } from './login-service.service';
+import { LoginService } from './services/login-service.service';
 import { Router } from '@angular/router';
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private user: LoginServiceService, private router: Router) {}
+  constructor(private user: LoginService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {

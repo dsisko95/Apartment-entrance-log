@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ILogs } from './logs';
+import { ILogs } from '../models/logs';
 import { toast } from 'angular2-materialize';
 @Injectable()
 export class AdministrationService {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class setUsernameAndRoleOnMenuService {
+export class setUserOnMenu {
   role: string;
   username: string;
   constructor() { }

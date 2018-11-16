@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { toast } from 'angular2-materialize';
-import { NgProgress } from 'ngx-progressbar';
-import { FilterServiceService } from '../filter-service.service';
 import { Router } from '@angular/router';
-import { LoginServiceService } from '../login-service.service';
-import { setUsernameAndRoleOnMenuService } from '../set-username-and-role-on-menu.service';
+import { LoginService } from '../services/login-service.service';
+import { setUserOnMenu } from '../services/set-username-on-menu.service';
 import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-login-form',
@@ -21,7 +19,7 @@ export class LoginFormComponent implements OnInit {
   newPassword: string;
   newPasswordRepeat: string;
   private usernameSecQuestion = [];
-  constructor(private router: Router, private loginService: LoginServiceService, private setUsernameAndRoleService: setUsernameAndRoleOnMenuService) { }
+  constructor(private router: Router, private loginService: LoginService, private setUsernameAndRoleService: setUserOnMenu) { }
 
   ngOnInit() {
     $(document).ready(function () {
