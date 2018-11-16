@@ -1,0 +1,439 @@
+<spinner backgroundColor="#ff0000" spinner="sk-three-bounce"></spinner>
+<mz-sidenav [id]="'sidenav-demo'" [collapseButtonId]="'btn-sidenav-demo'" [backgroundClass]="'red darken-2'" class="white-text">
+  <mz-sidenav-header>
+    <b>Antiheroji SSA</b> -
+    <b>
+      <span [(ngModel)]="nameType" ngDefaultControl>{{nameType}}</span>
+    </b>
+  </mz-sidenav-header>
+  <mz-sidenav-subheader>
+    <b>Apartmani API</b> -
+    <b>
+      <span [(ngModel)]="roleType" ngDefaultControl>{{roleType}}</span>
+    </b>
+  </mz-sidenav-subheader>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a href="#" class="waves-effect white-text" onClick="return false" (click)="backClicked()">
+      <i mz-icon [align]="'left'" [icon]="'home'" [size]="'small'" class="white-text">
+      </i>Home</a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <button mz-button id="data-add" class="red darken-3 info-item-add white-text">
+      <i mz-icon [align]="'left'" [icon]="'person_add'" [size]="'medium'" class="white-text">
+      </i>Administracija</button>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <button mz-button id="btn-dropdown-demo" class="red darken-3 info-item" (click)="bottomSheetModalItem.open()">Pomoć</button>
+  </mz-sidenav-link>
+</mz-sidenav>
+<button mz-button id="go-back" [flat]="true" [large]="true" class="white left" (click)="backClicked()">
+  <i mz-icon [align]="'left'" [icon]="'keyboard_backspace'" [size]="'medium'" class="black-text">
+  </i>NAZAD
+</button>
+<button mz-button id="btn-sidenav-demo" [flat]="true" [large]="true" class="white right">
+  <i mz-icon [align]="'left'" [icon]="'menu'" [size]="'medium'" class="black-text">
+  </i> Menu
+</button>
+<mz-modal #bottomSheetModalItem [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions" [fullscreen]="false">
+  <mz-modal-content>
+    <div class="collapsible-container">
+      <mz-collapsible [mode]="'expandable'" [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback" [popout]="true">
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'sort'" [size]="'medium'"></i> Sortiranje podataka u tabeli/kartici
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Klikom na naziv kolone kartice, odnosno na naziv kolone tabele, polja se sortiraju.
+            <br> Kada se još jednom klikne na navedenu kolonu, polje se sortira u rastućem redosledu.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'zoom_in'" [size]="'medium'"></i> Detaljniji prikaz podataka u tabeli/kartici
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Duplim klikom na karticu otvara se novi prozor sa detaljnijim informacijama o evidenciji.
+            <br> Klikom na tabelu otvara otvara se novi prozor sa detaljnijim informacijama o evidenciji.
+            <br> Takođe, ova polja se i dalje mogu sortirati klikom na kolone.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'update'" [size]="'medium'"></i> Update polja
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Klikom na ikonicu koja prikazuje olovku, prikazuje se polje za editovanje.
+            <br> Nakon što se vrednost promeni, potrebno je kliknuti na zelenu ikonicu i time se vrednost ažurira.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+      </mz-collapsible>
+    </div>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close class="red darken-1 white-text">Zatvori (Esc)</button>
+  </mz-modal-footer>
+</mz-modal>
+<section>
+  <div class="container clearfix">
+    <div class="row">
+      <div class="col s12 m12 l12 xl12">
+        <ul class="tabs">
+          <li class="tab col s3 m3 l3 xl3">
+            <a href="#citys">Gradovi</a>
+          </li>
+          <li class="tab col s3 m3 l3 xl3">
+            <a href="#owners">Korisnici</a>
+          </li>
+          <li class="tab col s3 m3 l3 xl3">
+            <a href="#apartments">Apartmani</a>
+          </li>
+          <li class="tab col s3 m3 l3 xl3">
+            <a href="#clients">Klijenti</a>
+          </li>
+        </ul>
+      </div>
+      <div id="citys" class="col s12 m12 l12 xl12">
+        <br>
+        <br>
+        <div class="col l4 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Ime grada'" id="city-input" placeholder="Unesite ime grada" type="text" [(ngModel)]="cityName">
+          </mz-input-container>
+        </div>
+        <div class="col l4 m4 s12">
+          <mz-select-container>
+            <select mz-select id="country-select" [label]="'Naziv države'" [placeholder]="'Odaberite naziv države'" [(ngModel)]="countryName">
+              <option *ngFor="let country of countryes | unique: 'Country'" value="{{country.Country}}">{{country.Country}}</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col l4 m4 s12">
+          <button mz-button class="send red darken-1 left" (click)="insertCity()">Unesite podatke</button>
+        </div>
+        <div class="col l12 s12 m12">
+          <table class="striped responsive-table highlight centered">
+            <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
+              <tr>
+                <th>Redni broj</th>
+                <th (click)="sort('Name')">Grad
+                  <i class="fa" *ngIf="key =='Name'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Country')">Država
+                  <i class="fa" *ngIf="key =='Country'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th>Akcija</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of allCitiesCountries | orderBy: key : reverse | paginate: {itemsPerPage: 5, currentPage: p, id: 'first'};let i = index">
+                <td>{{ i + 1 }}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <input type="text" name="city" id="city-edit" [(ngModel)]="log.Name">
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.Name}}</td>
+                <td>{{log.Country}}</td>
+                <td>
+                  <i *ngIf="log.Id === editRowID" mz-icon [align]="'center'" [icon]="'update'" [size]="'small'" class="teal-text" mz-tooltip
+                    [tooltip]="'Ažuriraj nove vrednosti'" [position]="'top'" [html]="true" (click)="editItemCity(log.Id, log.Name)">
+                  </i>
+                  <i mz-icon [align]="'center'" [icon]="'edit'" [size]="'small'" class="grey-text lighten-1" mz-tooltip [tooltip]="'Edituj grad'"
+                    [position]="'top'" [html]="true" (click)="editItemShow(log.Id)">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls class="myPagination center-align col xl12 l12 s12 m12" (pageChange)="p = $event" id="first"></pagination-controls>
+      </div>
+      <div id="owners" class="col s12 m12 l12 xl12">
+        <br>
+        <br>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Ime korisnika'" id="user-input" placeholder="Unesite ime korisnika" type="text" [(ngModel)]="userName">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Username'" id="username-input" placeholder="Unesite username" type="text" [(ngModel)]="userLoginName">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Password'" id="password-input" placeholder="Unesite password" type="password" [(ngModel)]="password">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Password Ponovo'" id="password-repeat-input" placeholder="Unesite password ponovo" type="password"
+              [(ngModel)]="passwordRepeated">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-select-container>
+            <select mz-select id="role-select" [label]="'Uloga'" [placeholder]="'Odaberite ulogu korisnika'" [(ngModel)]="role">
+              <option value="Administrator">Administrator</option>
+              <option value="Vlasnik">Vlasnik</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Sigurnosno pitanje br. 1'" id="secure-question-1-input" placeholder="Unesite naziv omiljenog ljubimca"
+              type="text" [(ngModel)]="secureQuestion1">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Sigurnosno pitanje br. 2'" id="secure-question-2-input" placeholder="Unesite naziv omiljenog jela"
+              type="text" [(ngModel)]="secureQuestion2">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <button mz-button class="red darken-1 left send" (click)="insertOwner()">Unesite podatke</button>
+        </div>
+        <div class="col l12 m12 s12">
+          <table class="striped responsive-table highlight centered">
+            <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
+              <tr>
+                <th>Redni broj</th>
+                <th (click)="sort('OwnerNameSurname')">Ime korisnika
+                  <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Username')">Korisničko ime
+                  <i class="fa" *ngIf="key =='Username'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Role')">Uloga
+                  <i class="fa" *ngIf="key =='Role'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th>Akcija</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of users | orderBy: key : reverse | paginate: {itemsPerPage: 5, currentPage: p1, id: 'second'};let i = index">
+                <td *ngIf="p1 === undefined">{{ 5 * (1 - 1) + i + 1 }}</td>
+                <td *ngIf="p1 !== undefined">{{ 5 * (p1 - 1) + i + 1 }}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <input type="text" name="ownerName" id="owner-edit" [(ngModel)]="log.OwnerNameSurname">
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.OwnerNameSurname}}</td>
+                <td>{{log.Username}}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <mz-select-container>
+                    <select mz-select id="role-edit" [label]="'Uloga'" [placeholder]="'Odaberite ulogu korisnika'" [(ngModel)]="log.Role">
+                      <option value="Administrator">Administrator</option>
+                      <option value="Vlasnik">Vlasnik</option>
+                    </select>
+                  </mz-select-container>
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.Role}}</td>
+                <td>
+                  <i *ngIf="log.Id === editRowID" mz-icon [align]="'center'" [icon]="'update'" [size]="'small'" class="teal-text" mz-tooltip
+                    [tooltip]="'Ažuriraj nove vrednosti'" [position]="'top'" [html]="true" (click)="editItemOwner(log.Id, log.OwnerNameSurname, log.Role)">
+                  </i>
+                  <i mz-icon [align]="'center'" [icon]="'edit'" [size]="'small'" class="grey-text lighten-1" mz-tooltip [tooltip]="'Edituj korisnika'"
+                    [position]="'top'" [html]="true" (click)="editItemShow(log.Id)">
+                  </i>
+                  <i *ngIf="p !== undefined" mz-icon [align]="'center'" [icon]="'delete'" [size]="'small'" class="red-text" mz-tooltip [tooltip]="'Izbriši korisnika'"
+                    [position]="'top'" [html]="true" (click)="deleteItemOwner(log.Id, 5 * (p1 - 1) + i + 1)">
+                  </i>
+                  <i *ngIf="p === undefined" mz-icon [align]="'center'" [icon]="'delete'" [size]="'small'" class="red-text" mz-tooltip [tooltip]="'Izbriši korisnika'"
+                    [position]="'top'" [html]="true" (click)="deleteItemOwner(log.Id, 5 * (1 - 1) + i + 1)">
+                  </i>
+                  <i mz-icon [align]="'center'" [icon]="'vpn_key'" [size]="'small'" class="grey-text darken-4" mz-tooltip [tooltip]="'Resetuj password'"
+                    [position]="'top'" [html]="true" (click)="resetPassword(log.Id, log.Username)">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls class="myPagination center-align col xl12 l12 s12 m12" (pageChange)="p1 = $event" id="second"></pagination-controls>
+      </div>
+      <div id="apartments" class="col s12 m12 l12 xl12">
+        <br>
+        <br>
+        <div class="col l3 m4 s12">
+          <mz-select-container>
+            <select mz-select id="city-apartment-select" [label]="'Grad'" [placeholder]="'Odaberite naziv grada'" [(ngModel)]="cityApartment">
+              <option *ngFor="let log of citysApartments" value="{{log.Id}}">{{log.Name}}</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Adresa'" id="address-apartment-input" placeholder="Unesite adresu" type="text" [(ngModel)]="addressApartment">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-select-container>
+            <select mz-select id="type-apartment-select" [label]="'Tip'" [placeholder]="'Odaberite tip stana'" [(ngModel)]="typeApartment">
+              <option value="Jednosoban">Jednosoban</option>
+              <option value="Dvosoban">Dvosoban</option>
+              <option value="Trosoban">Trosoban</option>
+              <option value="Cetvorosoban">Cetvorosoban</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Broj stana'" id="number-apartment-input" placeholder="Unesite broj stana" type="text" [(ngModel)]="numberApartment">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-select-container>
+            <select mz-select id="owner-apartment-select" [label]="'Vlasnik'" [placeholder]="'Odaberite naziv vlasnika'" [(ngModel)]="ownerApartment">
+              <option *ngFor="let log of ownersApartments" value="{{log.Id}}">{{log.OwnerNameSurname}}</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <button mz-button class="red darken-1 left send" (click)="insertApartment()">Unesite podatke</button>
+        </div>
+        <div class="col l12 m12 s12">
+          <table class="striped responsive-table highlight centered">
+            <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
+              <tr>
+                <th>Redni broj</th>
+                <th (click)="sort('CityName')">Grad
+                  <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Address')">Adresa
+                  <i class="fa" *ngIf="key =='Address'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Type')">Tip
+                  <i class="fa" *ngIf="key =='Type'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Number')">Broj
+                  <i class="fa" *ngIf="key =='Number'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('OwnerNameSurname')">Vlasnik
+                  <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th>Akcija</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of apartments | orderBy: key : reverse | paginate: {itemsPerPage: 5, currentPage: p2, id: 'third'};let i = index">
+                <td>{{ i + 1 }}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <mz-select-container>
+                    <select mz-select id="city-apartment-select-edit" [label]="'Grad'" [placeholder]="'Naziv grada'" [(ngModel)]="log.Name">
+                      <option *ngFor="let log of citysApartments" value="{{log.Id}}">{{log.Name}}</option>
+                    </select>
+                  </mz-select-container>
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.CityName}}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <input type="text" name="address" id="address-edit" [(ngModel)]="log.Address">
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.Address}}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <mz-select-container>
+                    <select mz-select id="type-apartment-select-edit" [label]="'Tip'" [placeholder]="'Tip stana'" [(ngModel)]="log.Type">
+                      <option value="Jednosoban">Jednosoban</option>
+                      <option value="Dvosoban">Dvosoban</option>
+                      <option value="Trosoban">Trosoban</option>
+                      <option value="Cetvorosoban">Cetvorosoban</option>
+                    </select>
+                  </mz-select-container>
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.Type}}</td>
+                <td *ngIf="log.Id !== editRowID">{{log.Number}}</td>
+                <td *ngIf="log.Id === editRowID">
+                  <input type="text" name="number" id="number-edit" [(ngModel)]="log.Number">
+                </td>
+                <td *ngIf="log.Id === editRowID">
+                  <mz-select-container>
+                    <select mz-select id="owner-apartment-select" [label]="'Vlasnik'" [placeholder]="'Naziv vlasnika'" [(ngModel)]="log.Owner">
+                      <option *ngFor="let log of ownersApartments" value="{{log.Id}}">{{log.OwnerNameSurname}}</option>
+                    </select>
+                  </mz-select-container>
+                </td>
+                <td *ngIf="log.Id !== editRowID">{{log.OwnerNameSurname}}</td>
+                <td>
+                  <i *ngIf="log.Id === editRowID" mz-icon [align]="'center'" [icon]="'update'" [size]="'small'" class="teal-text" mz-tooltip
+                    [tooltip]="'Ažuriraj nove vrednosti'" [position]="'top'" [html]="true" (click)="editItemApartment(log.Id, log.Name, log.Address, log.Type, log.Number, log.Owner)">
+                  </i>
+                  <i mz-icon [align]="'center'" [icon]="'edit'" [size]="'small'" class="grey-text lighten-1" mz-tooltip [tooltip]="'Edituj apartman'"
+                    [position]="'top'" [html]="true" (click)="editItemShow(log.Id)">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls class="myPagination center-align col xl12 l12 s12 m12" (pageChange)="p2 = $event" id="third"></pagination-controls>
+      </div>
+      <div id="clients" class="col s12 m12 l12 xl12">
+        <br>
+        <br>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'JMBG'" id="jmbg-input" placeholder="Unesite JMBG" type="text" [(ngModel)]="JMBG">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Ime i prezime'" id="client-input" placeholder="Unesite ime i prezime klijenta" type="text" [(ngModel)]="clientName">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <mz-input-container>
+            <input mz-input [label]="'Broj telefona'" id="telephone-input" placeholder="Unesite broj telefona" type="text" [(ngModel)]="telephone">
+          </mz-input-container>
+        </div>
+        <div class="col l3 m4 s12">
+          <button mz-button class="red darken-1 left send" (click)="insertClient()">Unesite podatke</button>
+        </div>
+        <div class="col l12 m12 s12">
+          <table class="striped responsive-table highlight centered">
+            <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
+              <tr>
+                <th>Redni broj</th>
+                <th (click)="sort('Identification_number')">JMBG
+                  <i class="fa" *ngIf="key =='Identification_number'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Name_Surname')">Ime klijenta
+                  <i class="fa" *ngIf="key =='Name_Surname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th (click)="sort('Telephone_number')">Telefon
+                  <i class="fa" *ngIf="key =='Telephone_number'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                </th>
+                <th>Akcija</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of clientsArray | orderBy: key : reverse | paginate: {itemsPerPage: 5, currentPage: p3, id: 'fourth'};let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{log.Identification_number}}</td>
+                <td *ngIf="log.Identification_number === editRowID">
+                  <input type="text" name="client" id="client-edit" [(ngModel)]="log.Name_Surname">
+                </td>
+                <td *ngIf="log.Identification_number !== editRowID">{{log.Name_Surname}}</td>
+                <td *ngIf="log.Identification_number === editRowID">
+                  <input type="text" name="telephone" id="telephone-edit" [(ngModel)]="log.Telephone_number">
+                </td>
+                <td *ngIf="log.Identification_number !== editRowID">{{log.Telephone_number}}</td>
+                <td>
+                  <i *ngIf="log.Identification_number === editRowID" mz-icon [align]="'center'" [icon]="'update'" [size]="'small'" class="teal-text" mz-tooltip
+                    [tooltip]="'Ažuriraj nove vrednosti'" [position]="'top'" [html]="true" (click)="editItemClient(log.Identification_number, log.Name_Surname, log.Telephone_number)">
+                  </i>
+                  <i mz-icon [align]="'center'" [icon]="'edit'" [size]="'small'" class="grey-text lighten-1" mz-tooltip [tooltip]="'Edituj klijenta'"
+                    [position]="'top'" [html]="true" (click)="editItemShow(log.Identification_number)">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls class="myPagination center-align col xl12 l12 s12 m12" (pageChange)="p3 = $event" id="fourth"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

@@ -1,0 +1,54 @@
+.clearfix {
+    content: "";
+    clear: both;
+  }
+ .send {
+    margin-top: 20px;
+  }
+  .myPagination /deep/ .ngx-pagination .current {
+    background: #ef5350;
+    border-radius: 3px;
+  }
+  thead > tr > th {
+    cursor: pointer;
+  }
+  tbody > tr > td:nth-child(4) i, tbody > tr > td:nth-child(5) i, tbody > tr > td:nth-child(7) i  {
+    cursor: pointer;
+  }
+  mz-sidenav-link a:hover, mz-sidenav-link a {
+    text-decoration: none;
+  }
+  .info-item {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+  }
+  .header-item-modal {
+    font-family: Roboto;
+    color: #ee6e73;
+  }
+  .collapsible-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .info-item-add {
+    @extend .info-item;
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
+    i {
+      font-size: 30px;
+    }
+  }
+  .btn.disabled, .disabled.btn-large, .btn-floating.disabled, .btn-large.disabled, .btn-flat.disabled, .btn:disabled, .btn-large:disabled, .btn-floating:disabled, .btn-large:disabled, .btn-flat:disabled, .btn[disabled], [disabled].btn-large, .btn-floating[disabled], .btn-large[disabled], .btn-flat[disabled] {
+    background-color: #e57373 !important;
+    color: #ffebee !important;
+  }
+.tabs {
+  overflow-x: hidden;
+}
+

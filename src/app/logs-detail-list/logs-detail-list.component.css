@@ -1,0 +1,17 @@
+.card .card-footer span {
+  font-size: 16px;
+}
+.myPagination /deep/ .ngx-pagination .current {
+  background: #343A40;
+}
+@keyframes in {
+  0% { transform: scale(0); opacity: 0;}
+  100% { transform: scale(1); opacity: 1;}
+}
+#tableData {
+  display: none;
+  animation: in 0.3s ease-in;
+}
+#cardData {
+  animation: in 0.3s ease-in;
+}

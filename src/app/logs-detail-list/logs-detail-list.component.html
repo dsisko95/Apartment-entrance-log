@@ -1,0 +1,398 @@
+<spinner backgroundColor="#ff0000" spinner="sk-three-bounce"></spinner>
+<mz-sidenav [id]="'sidenav-demo'" [collapseButtonId]="'btn-sidenav-demo'" [backgroundClass]="'red darken-2'" class="white-text">
+  <mz-sidenav-header>
+    <b>Antiheroji SSA</b> -
+    <b>
+      <span [(ngModel)]="nameType" ngDefaultControl>{{nameType}}</span>
+    </b>
+  </mz-sidenav-header>
+  <mz-sidenav-subheader>
+    <b>Apartmani API</b> -
+    <b>
+      <span [(ngModel)]="roleType" ngDefaultControl>{{roleType}}</span>
+    </b>
+  </mz-sidenav-subheader>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link [active]="true">
+    <a href="#" class="waves-effect white-text" onClick="return false">
+      <i mz-icon [align]="'left'" [icon]="'home'" [size]="'small'" class="white-text">
+      </i>Home</a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <button mz-button id="data-add" class="red darken-3 info-item-add white-text" routerLink="insertdata">
+      <i mz-icon [align]="'left'" [icon]="'person_add'" [size]="'medium'" class="white-text">
+      </i>Administracija</button>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <button mz-button id="btn-dropdown-demo" class="red darken-3 info-item" (click)="bottomSheetModalItem.open()">Pomoć</button>
+  </mz-sidenav-link>
+</mz-sidenav>
+<button mz-button id="go-back" [flat]="true" [large]="true" class="white left" (click)="backClicked()">
+  <i mz-icon [align]="'left'" [icon]="'keyboard_backspace'" [size]="'medium'" class="black-text">
+  </i>LOG OUT
+</button>
+<button mz-button id="btn-sidenav-demo" [flat]="true" [large]="true" class="white right">
+  <i mz-icon [align]="'left'" [icon]="'menu'" [size]="'medium'" class="black-text">
+  </i> Menu
+</button>
+<mz-modal #bottomSheetModalItem [fixedFooter]="false" [bottomSheet]="false" [options]="modalOptions" [fullscreen]="false">
+  <mz-modal-content>
+    <div class="collapsible-container">
+      <mz-collapsible [mode]="'expandable'" [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback" [popout]="true">
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'sort'" [size]="'medium'"></i> Sortiranje podataka u tabeli/kartici
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Klikom na naziv kolone kartice, odnosno na naziv kolone tabele, polja se sortiraju.
+            <br> Kada se još jednom klikne na navedenu kolonu, polje se sortira u rastućem redosledu.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'zoom_in'" [size]="'medium'"></i> Detaljniji prikaz podataka u tabeli/kartici
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Duplim klikom na karticu otvara se novi prozor sa detaljnijim informacijama o evidenciji.
+            <br> Klikom na tabelu otvara otvara se novi prozor sa detaljnijim informacijama o evidenciji.
+            <br> Takođe, ova polja se i dalje mogu sortirati klikom na kolone.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+        <mz-collapsible-item [active]="false">
+          <mz-collapsible-item-header>
+            <i mz-icon [align]="'left'" [icon]="'update'" [size]="'medium'"></i> Update polja
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+            Klikom na ikonicu koja prikazuje olovku, prikazuje se polje za editovanje.
+            <br> Nakon što se vrednost promeni, potrebno je kliknuti na zelenu ikonicu i time se vrednost ažurira.
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+      </mz-collapsible>
+    </div>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close class="red darken-1 white-text">Zatvori (Esc)</button>
+  </mz-modal-footer>
+</mz-modal>
+<!-- Section start -->
+<section>
+  <div class="container clearfix">
+    <h5>Filteri</h5>
+    <button mz-button class="red darken-1" (click)="resetFilters()" id="filterButton">Resetuj filtere</button>
+    <div class="row" id="filterContainer">
+      <div class="col l3 m4 s12">
+        <mz-select-container>
+          <select mz-select id="options-grad" [label]="'Grad'" [placeholder]="'Odaberite grad'" [(ngModel)]="city" name="cities" (change)="updateFilterFields()">
+            <option value="Svi">Svi</option>
+            <option *ngFor="let city of logsFilterAll | unique: 'CityName'" value="{{city.CityName}}">{{city.CityName}}</option>
+          </select>
+        </mz-select-container>
+      </div>
+      <div class="col l3 m4 s12">
+        <mz-select-container>
+          <select mz-select id="options-vlasnik" [label]="'Vlasnik'" [placeholder]="'Odaberite vlasnika'" [(ngModel)]="owner" name="owner"
+            (change)="updateFilterFields()">
+            <option value="Svi">Svi</option>
+            <option *ngFor="let log of logsFilterAll | unique: 'OwnerNameSurname'" value="{{log.OwnerNameSurname}}">{{log.OwnerNameSurname}}</option>
+          </select>
+        </mz-select-container>
+      </div>
+      <div class="col l3 m4 s12">
+        <mz-select-container>
+          <select mz-select id="options-klijent" [label]="'Klijent'" [placeholder]="'Odaberite klijenta'" [(ngModel)]="client" name="client"
+            (change)="updateFilterFields()">
+            <option value="Svi">Svi</option>
+            <option *ngFor="let log of logsFilterAll | unique: 'ClientNameSurname'" value="{{log.ClientNameSurname}}">{{log.ClientNameSurname}}</option>
+          </select>
+        </mz-select-container>
+      </div>
+      <div class="col l3 m4 s12">
+        <mz-select-container>
+          <select mz-select id="options-status" [label]="'Status'" [placeholder]="'Odaberite Status'" [(ngModel)]="status" name="status"
+            (change)="updateFilterFields()">
+            <option value="Svi">Svi</option>
+            <option *ngFor="let log of logsFilterAll | unique: 'Status'" value="{{log.Status}}">{{log.Status}}</option>
+          </select>
+        </mz-select-container>
+      </div>
+      <div class="col l4 m4 s12">
+        <mz-datepicker-container>
+          <input mz-datepicker [label]="'Datum od'" [options]="options" id="datepicker_od" placeholder="Izaberite datum od:" type="text"
+            [(ngModel)]="date_od">
+        </mz-datepicker-container>
+      </div>
+      <div class="col l4 m4 s12">
+        <mz-datepicker-container>
+          <input mz-datepicker [label]="'Datum do'" [options]="options" id="datepicker_do" placeholder="Izaberite datum do:" type="text"
+            [(ngModel)]="date_do">
+        </mz-datepicker-container>
+      </div>
+      <div class="col l m2 s12 right">
+        <button mz-button class="red darken-1" id="dateButton" (click)="dateValidate()">Pošalji datum</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="row">
+    <div class="col l3 s12">
+      <mz-switch-container>
+        <input mz-switch id="switchBtn" [off]="'Kartica'" [on]="'Tabela'" type="checkbox" (click)="switchView()">
+      </mz-switch-container>
+    </div>
+    <div class="col l9 s12 right">
+      <p class="right-align" id="counter">Broj rezultata:
+        <b>{{ ((logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status)?.length) === null
+          ? 0 : (logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status)?.length }}</b>
+      </p>
+    </div>
+  </div>
+</div>
+<main>
+  <div class="container">
+    <div class="row" id="cardData" *ngIf="p === undefined">
+      <div class="col s12 m6 xl4" *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index;">
+        <mz-card class="grey lighten-4" [hoverable]="true" (dblclick)="bottomSheetModalCard.open(); UniqueModalById( 9 * (1 - 1) + i )">
+          <mz-card-content>
+            <div class="row">
+              <div class="col l12 s12 m12 xl12">
+                <h5>Stan </h5>
+                <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Grad:</b>
+                <span class="right floating-text">{{log.CityName}}</span>
+                <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                  [html]="true">Adresa:</b>
+                <span class="right floating-text">{{log.ApartmentAddress}}</span>
+                <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                  [html]="true">Ime vlasnika:</b>
+                <span class="right floating-text">{{log.OwnerNameSurname}}</span>
+                <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <h5>Evidencija</h5>
+                <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                  [html]="true">Ime klijenta:</b>
+                <span class="right floating-text">{{log.ClientNameSurname}}</span>
+                <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Datum:</b>
+                <span class="right floating-text">{{log.Date | date:'EEEE, MMM dd, yyyy'}}</span>
+                <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Vreme:</b>
+                <span class="right floating-text">{{log.Date | date:'hh:mm a'}}</span>
+                <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b>Status:</b>
+                <span class="badge right-align">{{log.Status}}</span>
+              </div>
+            </div>
+          </mz-card-content>
+        </mz-card>
+      </div>
+    </div>
+    <div class="row" id="cardData" *ngIf="p !== undefined">
+        <div class="col s12 m6 xl4" *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index;">
+          <mz-card class="grey lighten-4" [hoverable]="true" (dblclick)="bottomSheetModalCard.open(); UniqueModalById( 9 * (p - 1) + i )">
+            <mz-card-content>
+              <div class="row">
+                <div class="col l12 s12 m12 xl12">
+                  <h5>Stan </h5>
+                  <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Grad:</b>
+                  <span class="right floating-text">{{log.CityName}}</span>
+                  <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                    [html]="true">Adresa:</b>
+                  <span class="right floating-text">{{log.ApartmentAddress}}</span>
+                  <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                    [html]="true">Ime vlasnika:</b>
+                  <span class="right floating-text">{{log.OwnerNameSurname}}</span>
+                  <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <h5>Evidencija</h5>
+                  <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
+                    [html]="true">Ime klijenta:</b>
+                  <span class="right floating-text">{{log.ClientNameSurname}}</span>
+                  <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Datum:</b>
+                  <span class="right floating-text">{{log.Date | date:'EEEE, MMM dd, yyyy'}}</span>
+                  <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Vreme:</b>
+                  <span class="right floating-text">{{log.Date | date:'hh:mm a'}}</span>
+                  <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                  <br>
+                  <b>Status:</b>
+                  <span class="badge right-align">{{log.Status}}</span>
+                </div>
+              </div>
+            </mz-card-content>
+          </mz-card>
+        </div>
+      </div>
+  </div>
+  <div class="container">
+    <div class="row" id="tableData">
+      <table class="striped responsive-table highlight centered">
+        <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
+          <tr>
+            <th>Redni broj</th>
+            <th (click)="sort('CityName')">Grad
+              <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th (click)="sort('ApartmentAddress')">Adresa
+              <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th (click)="sort('OwnerNameSurname')">Ime vlasnika
+              <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th (click)="sort('ClientNameSurname')">Ime klijenta
+              <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th (click)="sort('Date')">Datum
+              <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th (click)="sort('Date')">Vreme
+              <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+            </th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody class="tableBodyClickable" *ngIf="p === undefined">
+          <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index" (click)="bottomSheetModalTable.open(); UniqueModalById( 9 * (1 - 1) + i )">
+            <td>{{ 9 * (1 - 1) + i + 1 }}</td>
+            <td>{{log.CityName}}</td>
+            <td>{{log.ApartmentAddress}}</td>
+            <td>{{log.OwnerNameSurname}}</td>
+            <td>{{log.ClientNameSurname}}</td>
+            <td>{{log.Date | date:'EEEE, MMM dd, yyyy'}}</td>
+            <td>{{log.Date | date:'hh:mm a'}}</td>
+            <td>{{log.Status}}</td>
+          </tr>
+        </tbody>
+        <tbody class="tableBodyClickable" *ngIf="p !== undefined">
+            <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index" (click)="bottomSheetModalTable.open(); UniqueModalById( 9 * (p - 1) + i )">
+                <td>{{ 9 * (p - 1) + i + 1 }}</td>
+                <td>{{log.CityName}}</td>
+                <td>{{log.ApartmentAddress}}</td>
+                <td>{{log.OwnerNameSurname}}</td>
+                <td>{{log.ClientNameSurname}}</td>
+                <td>{{log.Date | date:'EEEE, MMM dd, yyyy'}}</td>
+                <td>{{log.Date | date:'hh:mm a'}}</td>
+                <td>{{log.Status}}</td>
+            </tr>  
+          </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<div class="container">
+  <div class="row">
+    <pagination-controls class="myPagination center-align" (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+<!-- Modal for card -->
+<mz-modal #bottomSheetModalCard [fixedFooter]="true" [bottomSheet]="false" [options]="modalOptions" [fullscreen]="false">
+  <mz-modal-content>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 l12 xl12">
+          <mz-card class="grey lighten-4" [hoverable]="true">
+            <mz-card-content>
+              <div class="row">
+                <div class="col s12 l12 m12 xl12" id="ModalCard">
+                  <h5>Stan</h5>
+                  <b>Grad:</b>
+                  <span class="right floating-text">{{logModal.CityName}}</span>
+                  <br>
+                  <b>Adresa:</b>
+                  <span class="right floating-text">{{logModal.ApartmentAddress}}</span>
+                  <br>
+                  <b>Broj:</b>
+                  <span class="right floating-text">{{logModal.ApartmentNumber}}</span>
+                  <br>
+                  <b>Tip:</b>
+                  <span class="right floating-text">{{logModal.ApartmentType}}</span>
+                  <br>
+                  <b>Ime vlasnika:</b>
+                  <span class="right floating-text">{{logModal.OwnerNameSurname}}</span>
+                  <br>
+                  <h5>Evidencija</h5>
+                  <b>Ime klijenta:</b>
+                  <span class="right floating-text">{{logModal.ClientNameSurname}}</span>
+                  <br>
+                  <b>JMBG:</b>
+                  <span class="right floating-text">{{logModal.Client_Identification_number}}</span>
+                  <br>
+                  <b>Telefon:</b>
+                  <span class="right floating-text">{{logModal.Telephone}}</span>
+                  <br>
+                  <b>Datum:</b>
+                  <span class="right floating-text">{{logModal.Date | date:'EEEE, MMM dd, yyyy'}}</span>
+                  <br>
+                  <b>Vreme:</b>
+                  <span class="right floating-text">{{logModal.Date | date:'hh:mm a'}}</span>
+                  <br>
+                  <b>Status:</b>
+                  <span class="badge right-align">{{logModal.Status}}</span>
+                </div>
+              </div>
+            </mz-card-content>
+          </mz-card>
+        </div>
+      </div>
+    </div>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close class="red darken-1 white-text">Zatvori (Esc)</button>
+  </mz-modal-footer>
+</mz-modal>
+<!-- Modal for table -->
+<mz-modal #bottomSheetModalTable [fixedFooter]="true" [bottomSheet]="false" [options]="modalOptions" [fullscreen]="false">
+  <mz-modal-content>
+          <table class="striped responsive-table highlight centered">
+            <thead>
+              <tr>
+                <th>Grad</th>
+                <th>Adresa</th>
+                <th>Broj apartmana</th>
+                <th>Tip</th>
+                <th>Ime vlasnika</th>
+                <th>Ime klijenta</th>
+                <th>JMBG klijenta</th>
+                <th>Telefon</th>
+                <th>Datum</th>
+                <th>Vreme</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{logModal.CityName}}</td>
+                <td>{{logModal.ApartmentAddress}}</td>
+                <td>{{logModal.ApartmentNumber}}</td>
+                <td>{{logModal.ApartmentType}}</td>
+                <td>{{logModal.OwnerNameSurname}}</td>
+                <td>{{logModal.ClientNameSurname}}</td>
+                <td>{{logModal.Client_Identification_number}}</td>
+                <td>{{logModal.Telephone}}</td>
+                <td>{{logModal.Date | date:'EEEE, MMM dd, yyyy'}}</td>
+                <td>{{logModal.Date | date:'hh:mm a'}}</td>
+                <td>{{logModal.Status}}</td>
+              </tr>
+            </tbody>
+          </table>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close class="red darken-1 white-text">Zatvori (Esc)</button>
+  </mz-modal-footer>
+</mz-modal>
+<app-footer></app-footer>

@@ -1,0 +1,66 @@
+<ng-progress></ng-progress>
+<div class="container z-depth-1">
+  <i mz-icon [icon]="'account_circle'" [size]="'medium'" id="loginIcon"></i>
+  <div class="row" id="formContent">
+    <div class="col s12 m12 l12 xl12">
+      <ul class="tabs">
+        <li class="tab col s6 m6 l6 xl6" id="login">
+          <a href="#test1" class="active">LOGIN</a>
+        </li>
+        <li class="tab col s6 m6 l6 xl6" id="checkUsernameLink">
+          <a href="#test2">RESET</a>
+        </li>
+        <li class="tab col s12 m12 l12 xl12" id="resetpassword">
+          <a href="#test3">Resetuj lozinku</a>
+        </li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12 m12 l12 xl12">
+        <mz-input-container>
+            <input mz-input [label]="'Korisničko ime'" [validate]="false" id="username-input" placeholder="Unesite korisničko ime" type="text"
+              name="username" [(ngModel)]="username" class="input-field" autofocus autocomplete="off">
+          </mz-input-container>
+          <br>
+          <mz-input-container>
+            <input mz-input [label]="'Lozinka'" [validate]="false" id="password-input" placeholder="Unesite lozinku" type="password"
+              name="password" [(ngModel)]="password">
+          </mz-input-container>
+          <br>
+          <button mz-button class="red darken-1 send-button" type="submit" (click)="loginUser()">Ulogujte se</button>
+    </div>
+    <div id="test2" class="col s12 m12 l12 xl12">
+        <mz-input-container>
+            <input mz-input [label]="'Korisničko ime'" [validate]="false" id="username-reset-input" placeholder="Unesite korisničko ime" type="text"
+              name="usernameCheck" [(ngModel)]="usernameCheck" class="input-field" autofocus>
+          </mz-input-container>
+          <br>
+          <mz-input-container>
+            <input mz-input [label]="'Ime omiljenog ljubimca'" [validate]="false" id="pet-check-input" placeholder="Unesite ime omiljenog ljubimca" type="text"
+              name="pet-check" [(ngModel)]="petCheckInput">
+          </mz-input-container>
+          <br>
+          <mz-input-container>
+              <input mz-input [label]="'Ime omiljenog jela'" [validate]="false" id="meal-check-input" placeholder="Unesite ime omiljenog jela" type="text"
+                name="meal-check" [(ngModel)]="mealCheckInput">
+            </mz-input-container>
+          <br>
+          <button mz-button class="red darken-1 send-button" type="submit" (click)="checkResetPassword()">Pošalji</button>
+    </div>
+    <div id="test3" class="col s12 m12 l12 xl12">
+      <br>
+      <br>
+        <mz-input-container>
+            <input mz-input [label]="'Novu lozinka'" [validate]="false" id="new-password-check" placeholder="Unesite novu lozinku" type="password"
+              name="new-password-check" [(ngModel)]="newPassword">
+          </mz-input-container>
+          <br>
+          <mz-input-container>
+              <input mz-input [label]="'Ponovite novu lozinku'" [validate]="false" id="new-password-repeat-check" placeholder="Ponovite novu lozinku" type="password"
+                name="new-password-repeat-check" [(ngModel)]="newPasswordRepeat">
+            </mz-input-container>
+          <br>
+          <button mz-button class="red darken-1 send-button" type="submit" (click)="resetPassword()">Resetuj lozinku</button>
+    </div>
+  </div>
+
+</div>
