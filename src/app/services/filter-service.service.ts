@@ -7,11 +7,8 @@ export class FilterServiceService {
   private value: string;
   private valueDate: string;
   private cname: string;
-  private address: string;
-  private type: string;
   private owname: string;
   private clname: string;
-  private clid: string;
   private status: string;
   private _url: string = "http://localhost:38066/api/filter";
   constructor(private http: HttpClient) { }

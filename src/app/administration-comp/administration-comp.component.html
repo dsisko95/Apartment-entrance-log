@@ -239,10 +239,10 @@
                     [position]="'top'" [html]="true" (click)="editItemShow(log.Id)">
                   </i>
                   <i *ngIf="p !== undefined" mz-icon [align]="'center'" [icon]="'delete'" [size]="'small'" class="red-text" mz-tooltip [tooltip]="'Izbriši korisnika'"
-                    [position]="'top'" [html]="true" (click)="deleteItemOwner(log.Id, 5 * (p1 - 1) + i + 1)">
+                    [position]="'top'" [html]="true">
                   </i>
                   <i *ngIf="p === undefined" mz-icon [align]="'center'" [icon]="'delete'" [size]="'small'" class="red-text" mz-tooltip [tooltip]="'Izbriši korisnika'"
-                    [position]="'top'" [html]="true" (click)="deleteItemOwner(log.Id, 5 * (1 - 1) + i + 1)">
+                    [position]="'top'" [html]="true">
                   </i>
                   <i mz-icon [align]="'center'" [icon]="'vpn_key'" [size]="'small'" class="grey-text darken-4" mz-tooltip [tooltip]="'Resetuj password'"
                     [position]="'top'" [html]="true" (click)="resetPassword(log.Id, log.Username)">
