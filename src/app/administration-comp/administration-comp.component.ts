@@ -347,7 +347,6 @@ export class AdministrationComponent implements OnInit {
     }
   }
   editItemShow(id: number) {
-    console.log(id);
     if (this.Edit === false) {
       this.editRowID = id;
       this.Edit = true;
