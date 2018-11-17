@@ -5,15 +5,14 @@ import { LoginService } from './services/login-service.service';
 import { Router } from '@angular/router';
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private user: LoginService, private router: Router) {}
+
+  constructor(private router: Router, private loginService: LoginService) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (localStorage.getItem("role") === 'Administrator' ||  localStorage.getItem("session")) {
-        return true;
-      } else {
-        this.router.navigate(['']);
-        return false;
-      }
+    if (this.loginService.getUserLoggedIn()) {
+      return true;
+    }
+    this.router.navigate(['/login']);
   }
 }

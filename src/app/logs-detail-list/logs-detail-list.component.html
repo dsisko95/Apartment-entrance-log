@@ -1,28 +1,28 @@
 <spinner backgroundColor="#ff0000" spinner="sk-three-bounce"></spinner>
 <mz-sidenav [id]="'sidenav-demo'" [collapseButtonId]="'btn-sidenav-demo'" [backgroundClass]="'red darken-2'" class="white-text">
   <mz-sidenav-header>
-    <b>Antiheroji SSA</b> -
+    <b>Korisničko ime</b> -
     <b>
       <span [(ngModel)]="nameType" ngDefaultControl>{{nameType}}</span>
     </b>
   </mz-sidenav-header>
   <mz-sidenav-subheader>
-    <b>Apartmani API</b> -
+    <b>Uloga</b> -
     <b>
       <span [(ngModel)]="roleType" ngDefaultControl>{{roleType}}</span>
     </b>
   </mz-sidenav-subheader>
   <mz-sidenav-divider></mz-sidenav-divider>
   <mz-sidenav-link [active]="true">
-    <a href="#" class="waves-effect white-text" onClick="return false">
+    <button mz-button class="red darken-3 info-item-add white-text" onClick="return false">
       <i mz-icon [align]="'left'" [icon]="'home'" [size]="'small'" class="white-text">
-      </i>Home</a>
+      </i>Home</button>
   </mz-sidenav-link>
   <mz-sidenav-divider></mz-sidenav-divider>
   <mz-sidenav-link>
-    <button mz-button id="data-add" class="red darken-3 info-item-add white-text" routerLink="insertdata">
-      <i mz-icon [align]="'left'" [icon]="'person_add'" [size]="'medium'" class="white-text">
-      </i>Administracija</button>
+    <a class="waves-effect white-text" routerLink="insertdata" id="data-add">
+      <i mz-icon [align]="'left'" [icon]="'person_add'" [size]="'small'" class="white-text">
+      </i>Administracija</a>
   </mz-sidenav-link>
   <mz-sidenav-divider></mz-sidenav-divider>
   <mz-sidenav-link>
@@ -52,7 +52,8 @@
         </mz-collapsible-item>
         <mz-collapsible-item [active]="false">
           <mz-collapsible-item-header>
-            <i mz-icon [align]="'left'" [icon]="'zoom_in'" [size]="'medium'"></i> Detaljniji prikaz podataka u tabeli/kartici
+            <i mz-icon [align]="'left'" [icon]="'zoom_in'" [size]="'medium'"></i> Detaljniji prikaz podataka u
+            tabeli/kartici
           </mz-collapsible-item-header>
           <mz-collapsible-item-body>
             Duplim klikom na karticu otvara se novi prozor sa detaljnijim informacijama o evidenciji.
@@ -84,7 +85,8 @@
     <div class="row" id="filterContainer">
       <div class="col l3 m4 s12">
         <mz-select-container>
-          <select mz-select id="options-grad" [label]="'Grad'" [placeholder]="'Odaberite grad'" [(ngModel)]="city" name="cities" (change)="updateFilterFields()">
+          <select mz-select id="options-grad" [label]="'Grad'" [placeholder]="'Odaberite grad'" [(ngModel)]="city" name="cities"
+            (change)="updateFilterFields()">
             <option value="Svi">Svi</option>
             <option *ngFor="let city of logsFilterAll | unique: 'CityName'" value="{{city.CityName}}">{{city.CityName}}</option>
           </select>
@@ -92,8 +94,8 @@
       </div>
       <div class="col l3 m4 s12">
         <mz-select-container>
-          <select mz-select id="options-vlasnik" [label]="'Vlasnik'" [placeholder]="'Odaberite vlasnika'" [(ngModel)]="owner" name="owner"
-            (change)="updateFilterFields()">
+          <select mz-select id="options-vlasnik" [label]="'Vlasnik'" [placeholder]="'Odaberite vlasnika'" [(ngModel)]="owner"
+            name="owner" (change)="updateFilterFields()">
             <option value="Svi">Svi</option>
             <option *ngFor="let log of logsFilterAll | unique: 'OwnerNameSurname'" value="{{log.OwnerNameSurname}}">{{log.OwnerNameSurname}}</option>
           </select>
@@ -101,8 +103,8 @@
       </div>
       <div class="col l3 m4 s12">
         <mz-select-container>
-          <select mz-select id="options-klijent" [label]="'Klijent'" [placeholder]="'Odaberite klijenta'" [(ngModel)]="client" name="client"
-            (change)="updateFilterFields()">
+          <select mz-select id="options-klijent" [label]="'Klijent'" [placeholder]="'Odaberite klijenta'" [(ngModel)]="client"
+            name="client" (change)="updateFilterFields()">
             <option value="Svi">Svi</option>
             <option *ngFor="let log of logsFilterAll | unique: 'ClientNameSurname'" value="{{log.ClientNameSurname}}">{{log.ClientNameSurname}}</option>
           </select>
@@ -110,8 +112,8 @@
       </div>
       <div class="col l3 m4 s12">
         <mz-select-container>
-          <select mz-select id="options-status" [label]="'Status'" [placeholder]="'Odaberite Status'" [(ngModel)]="status" name="status"
-            (change)="updateFilterFields()">
+          <select mz-select id="options-status" [label]="'Status'" [placeholder]="'Odaberite Status'" [(ngModel)]="status"
+            name="status" (change)="updateFilterFields()">
             <option value="Svi">Svi</option>
             <option *ngFor="let log of logsFilterAll | unique: 'Status'" value="{{log.Status}}">{{log.Status}}</option>
           </select>
@@ -119,14 +121,14 @@
       </div>
       <div class="col l4 m4 s12">
         <mz-datepicker-container>
-          <input mz-datepicker [label]="'Datum od'" [options]="options" id="datepicker_od" placeholder="Izaberite datum od:" type="text"
-            [(ngModel)]="date_od">
+          <input mz-datepicker [label]="'Datum od'" [options]="options" id="datepicker_od" placeholder="Izaberite datum od:"
+            type="text" [(ngModel)]="date_od">
         </mz-datepicker-container>
       </div>
       <div class="col l4 m4 s12">
         <mz-datepicker-container>
-          <input mz-datepicker [label]="'Datum do'" [options]="options" id="datepicker_do" placeholder="Izaberite datum do:" type="text"
-            [(ngModel)]="date_do">
+          <input mz-datepicker [label]="'Datum do'" [options]="options" id="datepicker_do" placeholder="Izaberite datum do:"
+            type="text" [(ngModel)]="date_do">
         </mz-datepicker-container>
       </div>
       <div class="col l m2 s12 right">
@@ -144,46 +146,50 @@
     </div>
     <div class="col l9 s12 right">
       <p class="right-align" id="counter">Broj rezultata:
-        <b>{{ ((logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status)?.length) === null
+        <b>{{ ((logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status)?.length)
+          === null
           ? 0 : (logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status)?.length }}</b>
       </p>
     </div>
   </div>
 </div>
 <main>
-  <div class="container">
+  <div class="container" *ngIf="cardView">
     <div class="row" id="cardData" *ngIf="p === undefined">
       <div class="col s12 m6 xl4" *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index;">
-        <mz-card class="grey lighten-4" [hoverable]="true" (dblclick)="bottomSheetModalCard.open(); UniqueModalById( 9 * (1 - 1) + i )">
+        <mz-card class="grey lighten-4" [hoverable]="true" (click)="openModal($event); UniqueModalById(log)">
           <mz-card-content>
             <div class="row">
               <div class="col l12 s12 m12 xl12">
-                <h5>Stan </h5>
-                <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Grad:</b>
+                <h5 style="display: inline-block">Stan </h5><br>
+                <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true" class="cardSort">Grad:</b>
                 <span class="right floating-text">{{log.CityName}}</span>
                 <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
-                <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                  [html]="true">Adresa:</b>
+                <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Adresa:</b>
                 <span class="right floating-text">{{log.ApartmentAddress}}</span>
                 <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
-                <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                  [html]="true">Ime vlasnika:</b>
+                <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Ime vlasnika:</b>
                 <span class="right floating-text">{{log.OwnerNameSurname}}</span>
                 <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
-                <h5>Evidencija</h5>
-                <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                  [html]="true">Ime klijenta:</b>
+                <h5 style="display: inline-block">Evidencija</h5><br>
+                <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Ime klijenta:</b>
                 <span class="right floating-text">{{log.ClientNameSurname}}</span>
                 <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
-                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Datum:</b>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Datum:</b>
                 <span class="right floating-text">{{log.Date | date:'EEEE, MMM dd, yyyy'}}</span>
                 <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
-                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Vreme:</b>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Vreme:</b>
                 <span class="right floating-text">{{log.Date | date:'hh:mm a'}}</span>
                 <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
                 <br>
@@ -196,51 +202,54 @@
       </div>
     </div>
     <div class="row" id="cardData" *ngIf="p !== undefined">
-        <div class="col s12 m6 xl4" *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index;">
-          <mz-card class="grey lighten-4" [hoverable]="true" (dblclick)="bottomSheetModalCard.open(); UniqueModalById( 9 * (p - 1) + i )">
-            <mz-card-content>
-              <div class="row">
-                <div class="col l12 s12 m12 xl12">
-                  <h5>Stan </h5>
-                  <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Grad:</b>
-                  <span class="right floating-text">{{log.CityName}}</span>
-                  <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                    [html]="true">Adresa:</b>
-                  <span class="right floating-text">{{log.ApartmentAddress}}</span>
-                  <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                    [html]="true">Ime vlasnika:</b>
-                  <span class="right floating-text">{{log.OwnerNameSurname}}</span>
-                  <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <h5>Evidencija</h5>
-                  <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'"
-                    [html]="true">Ime klijenta:</b>
-                  <span class="right floating-text">{{log.ClientNameSurname}}</span>
-                  <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Datum:</b>
-                  <span class="right floating-text">{{log.Date | date:'EEEE, MMM dd, yyyy'}}</span>
-                  <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">Vreme:</b>
-                  <span class="right floating-text">{{log.Date | date:'hh:mm a'}}</span>
-                  <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
-                  <br>
-                  <b>Status:</b>
-                  <span class="badge right-align">{{log.Status}}</span>
-                </div>
+      <div class="col s12 m6 xl4" *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index;">
+        <mz-card class="grey lighten-4" [hoverable]="true" (click)="openModal($event); UniqueModalById(log)">
+          <mz-card-content>
+            <div class="row">
+              <div class="col l12 s12 m12 xl12">
+                <h5 style="display: inline-block">Stan </h5><br>
+                <b (click)="sort('CityName')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Grad:</b>
+                <span class="right floating-text">{{log.CityName}}</span>
+                <i class="fa" *ngIf="key =='CityName'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('ApartmentAddress')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Adresa:</b>
+                <span class="right floating-text">{{log.ApartmentAddress}}</span>
+                <i class="fa" *ngIf="key =='ApartmentAddress'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('OwnerNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Ime vlasnika:</b>
+                <span class="right floating-text">{{log.OwnerNameSurname}}</span>
+                <i class="fa" *ngIf="key =='OwnerNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <h5 style="display: inline-block">Evidencija</h5><br>
+                <b (click)="sort('ClientNameSurname')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Ime klijenta:</b>
+                <span class="right floating-text">{{log.ClientNameSurname}}</span>
+                <i class="fa" *ngIf="key =='ClientNameSurname'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Datum:</b>
+                <span class="right floating-text">{{log.Date | date:'EEEE, MMM dd, yyyy'}}</span>
+                <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b (click)="sort('Date')" mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'"
+                  [position]="'top'" [html]="true">Vreme:</b>
+                <span class="right floating-text">{{log.Date | date:'hh:mm a'}}</span>
+                <i class="fa" *ngIf="key =='Date'" [ngClass]="{'fa-caret-down':reverse,'fa-caret-up':!reverse}"></i>
+                <br>
+                <b>Status:</b>
+                <span class="badge right-align">{{log.Status}}</span>
               </div>
-            </mz-card-content>
-          </mz-card>
-        </div>
+            </div>
+          </mz-card-content>
+        </mz-card>
       </div>
+    </div>
   </div>
   <div class="container">
-    <div class="row" id="tableData">
+    <div class="row" id="tableData" *ngIf="tableView">
       <table class="striped responsive-table highlight centered">
         <thead mz-tooltip [tooltip]="'Klikom na naziv kolone, možete je sortirati'" [position]="'top'" [html]="true">
           <tr>
@@ -267,7 +276,8 @@
           </tr>
         </thead>
         <tbody class="tableBodyClickable" *ngIf="p === undefined">
-          <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index" (click)="bottomSheetModalTable.open(); UniqueModalById( 9 * (1 - 1) + i )">
+          <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index"
+            (click)="bottomSheetModalTable.open(); UniqueModalById(log)">
             <td>{{ 9 * (1 - 1) + i + 1 }}</td>
             <td>{{log.CityName}}</td>
             <td>{{log.ApartmentAddress}}</td>
@@ -279,17 +289,18 @@
           </tr>
         </tbody>
         <tbody class="tableBodyClickable" *ngIf="p !== undefined">
-            <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index" (click)="bottomSheetModalTable.open(); UniqueModalById( 9 * (p - 1) + i )">
-                <td>{{ 9 * (p - 1) + i + 1 }}</td>
-                <td>{{log.CityName}}</td>
-                <td>{{log.ApartmentAddress}}</td>
-                <td>{{log.OwnerNameSurname}}</td>
-                <td>{{log.ClientNameSurname}}</td>
-                <td>{{log.Date | date:'EEEE, MMM dd, yyyy'}}</td>
-                <td>{{log.Date | date:'hh:mm a'}}</td>
-                <td>{{log.Status}}</td>
-            </tr>  
-          </tbody>
+          <tr *ngFor="let log of logs | filterCity:city | filterOwner:owner | filterClientName:client | filterStatus:status | orderBy: key : reverse | paginate: {itemsPerPage: 9, currentPage: p}; let i = index"
+            (click)="bottomSheetModalTable.open(); UniqueModalById(log)">
+            <td>{{ 9 * (p - 1) + i + 1 }}</td>
+            <td>{{log.CityName}}</td>
+            <td>{{log.ApartmentAddress}}</td>
+            <td>{{log.OwnerNameSurname}}</td>
+            <td>{{log.ClientNameSurname}}</td>
+            <td>{{log.Date | date:'EEEE, MMM dd, yyyy'}}</td>
+            <td>{{log.Date | date:'hh:mm a'}}</td>
+            <td>{{log.Status}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -358,38 +369,38 @@
 <!-- Modal for table -->
 <mz-modal #bottomSheetModalTable [fixedFooter]="true" [bottomSheet]="false" [options]="modalOptions" [fullscreen]="false">
   <mz-modal-content>
-          <table class="striped responsive-table highlight centered">
-            <thead>
-              <tr>
-                <th>Grad</th>
-                <th>Adresa</th>
-                <th>Broj apartmana</th>
-                <th>Tip</th>
-                <th>Ime vlasnika</th>
-                <th>Ime klijenta</th>
-                <th>JMBG klijenta</th>
-                <th>Telefon</th>
-                <th>Datum</th>
-                <th>Vreme</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{logModal.CityName}}</td>
-                <td>{{logModal.ApartmentAddress}}</td>
-                <td>{{logModal.ApartmentNumber}}</td>
-                <td>{{logModal.ApartmentType}}</td>
-                <td>{{logModal.OwnerNameSurname}}</td>
-                <td>{{logModal.ClientNameSurname}}</td>
-                <td>{{logModal.Client_Identification_number}}</td>
-                <td>{{logModal.Telephone}}</td>
-                <td>{{logModal.Date | date:'EEEE, MMM dd, yyyy'}}</td>
-                <td>{{logModal.Date | date:'hh:mm a'}}</td>
-                <td>{{logModal.Status}}</td>
-              </tr>
-            </tbody>
-          </table>
+    <table class="striped responsive-table highlight centered">
+      <thead>
+        <tr>
+          <th>Grad</th>
+          <th>Adresa</th>
+          <th>Broj apartmana</th>
+          <th>Tip</th>
+          <th>Ime vlasnika</th>
+          <th>Ime klijenta</th>
+          <th>JMBG klijenta</th>
+          <th>Telefon</th>
+          <th>Datum</th>
+          <th>Vreme</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{logModal.CityName}}</td>
+          <td>{{logModal.ApartmentAddress}}</td>
+          <td>{{logModal.ApartmentNumber}}</td>
+          <td>{{logModal.ApartmentType}}</td>
+          <td>{{logModal.OwnerNameSurname}}</td>
+          <td>{{logModal.ClientNameSurname}}</td>
+          <td>{{logModal.Client_Identification_number}}</td>
+          <td>{{logModal.Telephone}}</td>
+          <td>{{logModal.Date | date:'EEEE, MMM dd, yyyy'}}</td>
+          <td>{{logModal.Date | date:'hh:mm a'}}</td>
+          <td>{{logModal.Status}}</td>
+        </tr>
+      </tbody>
+    </table>
   </mz-modal-content>
   <mz-modal-footer>
     <button mz-button [flat]="true" mz-modal-close class="red darken-1 white-text">Zatvori (Esc)</button>

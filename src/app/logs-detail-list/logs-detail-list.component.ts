@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FilterServiceService } from '../services/filter-service.service';
 import { toast } from 'angular2-materialize';
@@ -6,13 +6,15 @@ import { LoginService } from '../services/login-service.service';
 import { setUserOnMenu } from '../services/set-username-on-menu.service';
 import { Location } from '@angular/common';
 import { MzModalService } from 'ng2-materialize';
+import { ILogs } from '../models/logs';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-logs-detail-list',
   templateUrl: './logs-detail-list.component.html',
   styleUrls: ['./logs-detail-list.component.scss'],
   providers: [DatePipe, FilterServiceService]
-}) 
-export class LogsDetailListComponent implements OnInit {
+})
+export class LogsDetailListComponent implements OnInit, OnDestroy {
   public logs = [];
   public logsFilterAll = [];
   // date format
@@ -20,8 +22,8 @@ export class LogsDetailListComponent implements OnInit {
     format: 'dddd, dd mmm, yyyy',
     formatSubmit: 'm-d-yyyy',
   };
-  cardView: boolean;
-  tableView: boolean = true;
+  cardView: boolean = true;
+  tableView: boolean = false;
   city: string;
   owner: string;
   client: string;
@@ -34,6 +36,9 @@ export class LogsDetailListComponent implements OnInit {
   nameType: string;
   logintext: string;
   logModal: object = {};
+  loginObj: ILogs;
+  subscription: Subscription;
+  @ViewChild('bottomSheetModalCard') modalCard;
   constructor(private filtersService: FilterServiceService, private loginService: LoginService, private setUsernameAndRoleService: setUserOnMenu, private location: Location, private modalService: MzModalService) {
     this.city = 'Svi';
     this.owner = 'Svi';
@@ -41,60 +46,50 @@ export class LogsDetailListComponent implements OnInit {
     this.status = 'Svi';
   }
   ngOnInit() {
-    this.allLogs();
-    this.populateOwners();
-    this.updateFilterFields();
-    this.setUsernameAndRole();
-    this.checkRole();
+    this.subscription = this.loginService.getLoginObj().subscribe((data: ILogs) => {
+      this.loginObj = data;
+      this.allLogs();
+      this.populateOwners();
+      this.updateFilterFields();
+      this.setUsernameAndRole();
+      this.checkRole();
+    }, error => { throw new Error(error) });
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   backClicked() {
     this.location.back();
-    localStorage.removeItem('session');
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
   }
   setUsernameAndRole() {
-    this.roleType === undefined ? this.roleType = localStorage.getItem('role') : this.roleType = this.setUsernameAndRoleService.getValueForRole();
-    this.nameType === undefined ? this.nameType = localStorage.getItem('username') : this.nameType = this.setUsernameAndRoleService.getValueForUsername();
-  }
+    this.roleType === undefined ? this.roleType = this.loginObj['Role'] : this.roleType = this.setUsernameAndRoleService.getValueForRole();
+    this.nameType === undefined ? this.nameType = this.loginObj['Username'] : this.nameType = this.setUsernameAndRoleService.getValueForUsername();
+  } 
   checkRole() {
-    if (localStorage.getItem('role') === "Vlasnik") {
+    if (this.loginObj['Role'] === "Vlasnik") {
       const dataAdd = document.getElementById('data-add');
-      dataAdd.style.display = "none";
+      dataAdd.remove();
     }
   }
   populateOwners() {
     const username = document.getElementById('options-vlasnik');
-    if (localStorage.getItem('role') === "Vlasnik") {
-      this.owner = localStorage.getItem('username');
-      username.setAttribute("disabled","");
+    if (this.loginObj['Role'] === "Vlasnik") {
+      this.owner = this.loginObj['OwnerNameSurname'];
+      username.setAttribute("disabled", "");
     }
   }
   switchView() {
-    const switchBtn = document.getElementById('switchBtn');
-    const table = document.getElementById('tableData');
-    const card = document.getElementById('cardData');
-    if (this.tableView) {
-      table.style.display = 'block';
-      card.style.display = 'none';
-      this.cardView = true;
-      this.tableView = false;
-    } else if (this.cardView) {
-      table.style.display = 'none';
-      card.style.display = 'block';
-      this.cardView = false;
-      this.tableView = true;
-    }
+    this.cardView = !this.cardView;
+    this.tableView = !this.tableView;
   }
   allLogs() {
     this.loginService.getLogs()
-      .subscribe(data => this.logs = data);
+      .subscribe(data => { this.logs = data }, error => { throw new Error(error) });
   }
   resetFilters() {
     this.city = 'Svi';
-    if ( localStorage.getItem('role') === "Vlasnik") {
-    this.owner = localStorage.getItem('username');
-    } else {
+    if (this.loginObj['Role'] === "Vlasnik") {
+      this.owner = this.loginObj['OwnerNameSurname'];
       this.owner = "Svi";
     }
     this.client = 'Svi';
@@ -108,9 +103,9 @@ export class LogsDetailListComponent implements OnInit {
     this.city === undefined || this.city === '' || this.city === 'Svi' ? this.filtersService.setValueForCname('SELECT DISTINCT c.Name FROM Monitoring m, Apartments a, Cities c WHERE c.Id=a.City_Id AND a.Id=m.Apartment_Id') : this.filtersService.setValueForCname(`'${this.city}'`);
     this.owner === undefined || this.owner === '' || this.owner === 'Svi' ? this.filtersService.setValueForOwname('SELECT DISTINCT ow.OwnerNameSurname FROM Monitoring m, Apartments a, Cities c, Clients cl, Owners ow WHERE c.Id=a.City_Id AND a.Id=m.Apartment_Id AND m.Client_Identification_number=cl.Identification_number AND ow.Id = a.Owner_Id') : this.filtersService.setValueForOwname(`'${this.owner}'`);
     this.client === undefined || this.client === '' || this.client === 'Svi' ? this.filtersService.setValueForClname('SELECT DISTINCT cl.Name_Surname FROM Monitoring m, Apartments a, Cities c, Clients cl, Owners ow WHERE c.Id=a.City_Id AND a.Id=m.Apartment_Id AND m.Client_Identification_number=cl.Identification_number AND ow.Id = a.Owner_Id') : this.filtersService.setValueForClname(`'${this.client}'`);
-    this.status === undefined || this.status === '' || this.status=== 'Svi' ? this.filtersService.setValueForStatus('SELECT DISTINCT m.Status FROM Monitoring m, Apartments a, Cities c, Clients cl WHERE c.Id=a.City_Id AND a.Id=m.Apartment_Id AND m.Client_Identification_number=cl.Identification_number') : this.filtersService.setValueForStatus(`'${this.status}'`);
+    this.status === undefined || this.status === '' || this.status === 'Svi' ? this.filtersService.setValueForStatus('SELECT DISTINCT m.Status FROM Monitoring m, Apartments a, Cities c, Clients cl WHERE c.Id=a.City_Id AND a.Id=m.Apartment_Id AND m.Client_Identification_number=cl.Identification_number') : this.filtersService.setValueForStatus(`'${this.status}'`);
     this.filtersService.getFilterAllLogs()
-        .subscribe(data => this.logsFilterAll = data);
+      .subscribe(data => { this.logsFilterAll = data }, error => { throw new Error(error) });
   }
   dateValidate() {
     const date_od_value = new Date(`${this.date_od}`);
@@ -121,19 +116,29 @@ export class LogsDetailListComponent implements OnInit {
       toast("Datum do koga se traži evidencija mora biti veći od početnog datuma!", 4000);
     }
     else {
-      const counterResult = document.getElementById('counter');
       this.filtersService.setValue(this.date_od);
       this.filtersService.setValueForDate(this.date_do);
       this.filtersService.getFilterLogsByDateBetween()
-      .subscribe(data => this.logs = data);
+        .subscribe(data => { this.logs = data }, error => { throw new Error(error) });
     }
   }
-  sort (key) {
+  sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
-  UniqueModalById(index: number) {
-    this.logModal = this.logs[index];
+  cardSort(key, event: any) {
+    if (event.target.classList.contains('cardSort')) {
+      this.key = key;
+      this.reverse = !this.reverse;
+    }
+  }
+  UniqueModalById(log: any) {
+    this.logModal = log;
+  }
+  openModal(event: any) {
+    if (event.target.matches('div')) {
+      this.modalCard.open()
+    }
   }
 }
 

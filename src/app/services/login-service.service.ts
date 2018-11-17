@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ILogs } from '../models/logs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class LoginService {
@@ -12,6 +13,7 @@ export class LoginService {
   private mealCheckInput: string;
   private newPassword: string;
   private _url: string = "http://localhost:38066/api/login";
+  private loginObj = new BehaviorSubject<any>('');
   constructor(private http: HttpClient) { 
 
   }
@@ -27,6 +29,9 @@ export class LoginService {
   }
   getLogs(): Observable<ILogs[]>{
     return this.http.get<ILogs[]>(this._url.concat("/getalllogs"));
+  }
+  getLoginObj(): Observable<ILogs> {
+    return this.loginObj.asObservable();
   }
   // update methods
   updatePassword(): Observable<Object> {
@@ -55,5 +60,8 @@ export class LoginService {
   }
   setValueForMealCheck(data: string) {
     this.mealCheckInput = data;
+  }
+  setLoginObj(obj: ILogs): void {
+    this.loginObj.next(obj);
   }
 }

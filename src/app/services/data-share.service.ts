@@ -10,6 +10,5 @@ export class DataShareService {
   }
   setValue(data:string) {
     this.city.next(data);
-    console.log(this.currentCity);
   }
 }

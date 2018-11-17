@@ -22,6 +22,7 @@ export class LoginFormComponent implements OnInit {
   resetForm: FormGroup;
   newPassForm: FormGroup;
   key: string = '8b2b7d7dc4063bc0bf30986536f8816c71405c16fb0cc4677db1e349af157baa';
+  regexWhitespace = /\s/;
   constructor(private router: Router, private loginService: LoginService, private setUsernameAndRoleService: setUserOnMenu) { }
 
   ngOnInit() {
@@ -70,8 +71,7 @@ export class LoginFormComponent implements OnInit {
   loginUser() {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
-    const regexWhitespace = /\s/;
-    if (!this.loginForm.valid || (username.match(regexWhitespace) || password.match(regexWhitespace))) {
+    if (!this.loginForm.valid || (username.match(this.regexWhitespace) || password.match(this.regexWhitespace))) {
       toast("Unesite korisničko ime/lozinku!", 3000);
     } else {
       const ciphertextPassword = CryptoJS.HmacMD5(password, this.key);
@@ -90,17 +90,17 @@ export class LoginFormComponent implements OnInit {
             this.setUsernameAndRoleService.setValueForRole(this.login['Role']);
             this.setUsernameAndRoleService.setValueForUsername(this.login['OwnerNameSurname']);
             this.loginService.setUserLoggedIn();
-            this.router.navigateByUrl('/logsdetail');
+            this.loginService.setLoginObj(data);
+            this.router.navigate(['/logsdetail']);
           }
-        });
+        }, error => {throw new Error(error)});
     }
   }
   checkResetPassword() {
     const username = this.resetForm.value.resetUsername;
     const pet = this.resetForm.value.resetPet;
     const meal = this.resetForm.value.resetMeal;
-    const regexWhitespace = /\s/;
-    if (!this.resetForm.valid || (username.match(regexWhitespace) || pet.match(regexWhitespace) || meal.match(regexWhitespace))) {
+    if (!this.resetForm.valid || (username.match(this.regexWhitespace) || pet.match(this.regexWhitespace) || meal.match(this.regexWhitespace))) {
       toast("Unesite tražena polja!", 3000);
     } else {
       const ciphertextSecQuest1 = CryptoJS.HmacMD5(pet, this.key);
@@ -117,14 +117,13 @@ export class LoginFormComponent implements OnInit {
           this.switchTabsHide();
           this.resetFormFields();
         }
-      });
+      }, error => {throw new Error(error)});
     }
   }
   resetPassword() {
     const newPass = this.newPassForm.value.newPass;
     const newPassRepeated = this.newPassForm.value.newPassRepeated;
-    const regexWhitespace = /\s/;
-    if (!this.newPassForm.valid || (newPass.match(regexWhitespace) || newPassRepeated.match(regexWhitespace))) {
+    if (!this.newPassForm.valid || (newPass.match(this.regexWhitespace) || newPassRepeated.match(this.regexWhitespace))) {
       toast("Molimo vas unesite odgovarajuća polja!", 3000);
     } else {
       if (newPass.length <= 5) {
@@ -140,7 +139,7 @@ export class LoginFormComponent implements OnInit {
           this.loginService.updatePassword().subscribe(data => {
             toast("Lozinka je uspešno promenjena!", 3000);
             window.location.reload();
-          });
+          }, error => {throw new Error(error)});
         }
       }
     }

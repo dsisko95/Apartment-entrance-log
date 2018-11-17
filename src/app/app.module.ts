@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from './services/login-service.service';
 import { AuthGuard } from './auth.guard';
-import { AuthAdminGuard } from './auth-admin.guard';
 import { setUserOnMenu } from './services/set-username-on-menu.service';
 import { AppComponent } from './app.component';
 import { LogsDetailListComponent } from './logs-detail-list/logs-detail-list.component';
@@ -41,7 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterializeModule,
     ProgressBarModule
   ],
-  providers: [LoginService, setUserOnMenu, AuthGuard, AuthAdminGuard],
+  providers: [LoginService, setUserOnMenu, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
