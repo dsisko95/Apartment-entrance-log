@@ -6,7 +6,7 @@ import { toast } from 'angular2-materialize';
 @Injectable()
 export class AdministrationService {
 
-  private _url: string = "http://localhost:38066/api/admin";
+  private _url: string = "http://apartment-logs.somee.com/api/admin";
   private cityName: string;
   private country: string;
   private list: object[];

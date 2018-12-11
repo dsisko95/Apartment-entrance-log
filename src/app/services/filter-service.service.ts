@@ -10,7 +10,7 @@ export class FilterServiceService {
   private owname: string;
   private clname: string;
   private status: string;
-  private _url: string = "http://localhost:38066/api/filter";
+  private _url: string = "http://apartment-logs.somee.com/api/filter";
   constructor(private http: HttpClient) { }
   
   // filterController methods

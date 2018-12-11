@@ -12,7 +12,7 @@ export class LoginService {
   private petCheckInput: string;
   private mealCheckInput: string;
   private newPassword: string;
-  private _url: string = "http://localhost:38066/api/login";
+  private _url: string = "http://apartment-logs.somee.com/api/login";
   private loginObj = new BehaviorSubject<any>('');
   constructor(private http: HttpClient) { 
 
